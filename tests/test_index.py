@@ -2,7 +2,7 @@ import unittest
 import json
 
 try:
-    from .index import handler
+    from ..index import handler
 except ImportError:
     from index import handler
 
