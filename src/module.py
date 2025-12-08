@@ -3,14 +3,9 @@ from typing import Any
 from lf_toolkit.chat.result import ChatResult as Result
 from lf_toolkit.chat.params import ChatParams as Params
 
-try:
-    from .agent.utils.parse_json_context_to_prompt import parse_json_to_prompt
-    from .agent.agent import invoke_base_agent
-    from .agent.utils.types import JsonType
-except ImportError:
-    from src.agent.utils.parse_json_context_to_prompt import parse_json_to_prompt
-    from src.agent.agent import invoke_base_agent
-    from src.agent.utils.types import JsonType
+from src.agent.utils.parse_json_context_to_prompt import parse_json_to_prompt
+from src.agent.agent import invoke_base_agent
+from src.agent.utils.types import JsonType
 
 def chat_module(message: Any, params: Params) -> JsonType:
     """

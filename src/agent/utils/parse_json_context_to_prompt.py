@@ -3,7 +3,7 @@ Refactored JSON to prompt parser using improved, clearer structure.
 """
 
 from typing import List, Optional, Dict, Any, Union
-from .prompt_context_templates import PromptFormatter
+from src.agent.utils.prompt_context_templates import PromptFormatter
 
 # Definitions questionSubmissionSummary type
 class StudentLatestSubmission:
