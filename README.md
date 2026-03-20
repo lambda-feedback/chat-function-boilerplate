@@ -240,7 +240,6 @@ Body with optional fields:
       "estimatedTime": "15-25 minutes",
       "parts": [
         {
-          "partId": "<part uuid>",
           "position": 0,
           "content": "<part prompt>",
           "answerContent": "<part answer>",
