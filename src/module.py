@@ -126,7 +126,6 @@ def _build_question_information(context: dict) -> dict:
 
 def _transform_part(p: dict, position: int) -> dict:
     return {
-        "publishedPartId": p.get("partId"),
         "publishedPartPosition": p.get("position", position),
         "publishedPartContent": p.get("content"),
         "publishedPartAnswerContent": p.get("answerContent"),
@@ -140,11 +139,8 @@ def _transform_part(p: dict, position: int) -> dict:
 
 
 def _transform_response_area(ra: dict, position: int) -> dict:
-    ra_id = ra.get("responseAreaId")
     return {
-        "id": ra_id,
         "position": ra.get("position", position),
-        "universalResponseAreaId": ra_id,
         "preResponseText": ra.get("preResponseText"),
         "responseType": ra.get("responseType"),
         "answer": ra.get("answer"),
@@ -154,11 +150,8 @@ def _transform_response_area(ra: dict, position: int) -> dict:
 def _build_submission_summary(submissions: list) -> list:
     return [
         {
-            "publishedPartId": None,
             "publishedPartPosition": None,
-            "publishedResponseAreaId": s.get("responseAreaId"),
-            "publishedResponseAreaPosition": None,
-            "responseAreaUniversalId": s.get("responseAreaId"),
+            "publishedResponseAreaPosition": i,
             "publishedResponseAreaPreResponseText": None,
             "publishedResponseType": s.get("responseType"),
             "publishedResponseConfig": None,
@@ -166,7 +159,7 @@ def _build_submission_summary(submissions: list) -> list:
             "totalWrongSubmissions": s.get("wrongSubmissions"),
             "latestSubmission": s.get("latestSubmission"),
         }
-        for s in submissions
+        for i, s in enumerate(submissions)
     ]
 
 
@@ -179,9 +172,7 @@ def _build_access_information(task_progress: dict) -> dict:
         "accessStatus": task_progress.get("accessStatus"),
         "markedDone": task_progress.get("markedDone"),
         "currentPart": {
-            "id": current_part.get("partId"),
             "position": current_part.get("position"),
-            "universalPartId": current_part.get("partId"),
             "timeTakenPart": current_part.get("timeSpentOnPart"),
             "markedDonePart": current_part.get("markedDone"),
         },
