@@ -75,8 +75,11 @@ def parse_json_to_prompt(context: dict, task_progress: dict) -> str:
         "your specific situation.\n\n"
     )
     valid_sections = [s.strip() for s in sections if s and s.strip()]
-    response_format = f"""# Response Formatting
-        {response_format_prompt}""" if response_format_prompt else ""
+    response_format = (
+        "# Response Formatting\n" + response_format_prompt
+        if response_format_prompt
+        else ""
+    )
     content = intro + "\n".join(valid_sections) + "\n" + response_format
     content = content.replace("&#x20;&#x20;", " ").replace("&#x20", " ")
     return "\n".join(line for line in content.split("\n") if line.strip() or not line).strip()
