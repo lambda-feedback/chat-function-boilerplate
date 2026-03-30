@@ -8,7 +8,7 @@ from lf_toolkit.chat import ChatRequest
 from src.module import chat_module
 
 # File path for the input text
-path = "src/agent/utils/example_inputs/"
+path = "tests/example_inputs/"
 input_file = path + "example_input_1.json"
 
 # Step 1: Read the input file

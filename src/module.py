@@ -4,79 +4,49 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from lf_toolkit.chat import ChatRequest, ChatResponse, Message
 from lf_toolkit.shared.mued_api_v0_1_0 import Role
 
-from src.agent.utils.parse_json_context_to_prompt import (
-    parse_json_to_prompt,
-    QuestionDetails,
-    StudentWorkResponseArea,
-    QuestionAccessInformation,
-)
+from src.agent.context import parse_json_to_prompt
 from src.agent.agent import invoke_base_agent
 
 
 def chat_module(request: ChatRequest) -> ChatResponse:
     """
-    Function used by student to converse with a chatbot.
-    ---
-    The handler function passes a ChatRequest to chat_module().
+    Main entry point — receives a ChatRequest and returns a ChatResponse.
 
     The ChatRequest contains:
-    - `messages`: list of Message objects (role + content), last is the current message.
-    - `conversationId`: unique identifier for the conversation session.
-    - `user`: optional user info (preferences, task progress).
-    - `context`: optional educational context (course material, question info, summary).
+    - `messages`: conversation history; the last message is the current student input.
+    - `conversationId`: unique session identifier.
+    - `user`: optional user info (preference, task progress).
+    - `context`: optional educational context (question details, prior conversation summary).
 
-    The output must be a ChatResponse conforming to the muEd API schema.
-
-    Any standard python library may be used, as well as any package
-    available on pip (provided it is added to requirements.txt).
-
-    The way you wish to structure your code (all in this function, or
-    split into many) is entirely up to you. All that matters are the
-    return types and that chat_module() is the main function used
-    to output the Chatbot response.
+    Edit src/agent/prompts.py to change the chatbot's behaviour.
+    Edit src/agent/agent.py to change the agent logic (summarisation threshold, LLM provider, etc.).
     """
 
-    # EXTRACT FIELDS FROM MUED REQUEST
     conversation_id = request.conversationId
-    if conversation_id is None:
-        raise Exception("Internal Error: The conversation id is required in the request.")
 
     context = request.context or {}
     task_progress = (request.user.taskProgress or {}) if request.user else {}
-    current_part_progress = task_progress.get("currentPart", {}) if task_progress else {}
 
     summary = context.get("summary", "") or ""
 
     conversationalStyle = ""
     if request.user and request.user.preference:
-        pref = request.user.preference.model_dump()
-        conversationalStyle = pref.get("conversationalStyle", "") or ""
+        conversationalStyle = request.user.preference.model_dump().get("conversationalStyle", "") or ""
 
     messages = _to_langchain_messages(request.messages)
 
-    # Transform mued context/taskProgress into old parse_json_to_prompt format
-    question_information = QuestionDetails(**_build_question_information(context)) if context.get("question") else None
-    question_submission_summary = [StudentWorkResponseArea(**s) for s in _build_submission_summary(current_part_progress.get("responseAreas", []))]
-    question_access_information = QuestionAccessInformation(**_build_access_information(task_progress)) if task_progress else None
-
-    # PARSE QUESTION CONTEXT TO PROMPT
     try:
-        question_response_details_prompt = parse_json_to_prompt(
-            question_submission_summary,
-            question_information,
-            question_access_information,
-        )
+        context_prompt = parse_json_to_prompt(context, task_progress)
     except Exception as e:
         print("ERROR:: ", e)
-        raise Exception("Internal Error: The question response details could not be parsed.")
+        raise Exception("Internal Error: The context prompt could not be parsed.")
 
-    # RUN THE AGENT AND MEASURE PROCESSING TIME
     start_time = time.time()
     chatbot_response = invoke_base_agent(
         messages=messages,
         summary=summary,
         conversationalStyle=conversationalStyle,
-        question_response_details=question_response_details_prompt,
+        context_prompt=context_prompt,
         session_id=conversation_id,
     )
     end_time = time.time()
@@ -102,78 +72,3 @@ def _to_langchain_messages(messages):
         elif role == "SYSTEM":
             result.append(SystemMessage(content=m.content))
     return result
-
-
-def _build_question_information(context: dict) -> dict:
-    set_data = context.get("set", {})
-    question_data = context.get("question", {})
-    return {
-        "setNumber": set_data.get("number"),
-        "setName": set_data.get("title"),
-        "setDescription": set_data.get("description"),
-        "questionNumber": question_data.get("number"),
-        "questionTitle": question_data.get("title"),
-        "questionGuidance": question_data.get("guidance"),
-        "questionContent": question_data.get("content"),
-        "estimatedTime": question_data.get("estimatedTime"),
-        "durationLowerBound": None,
-        "durationUpperBound": None,
-        "parts": [
-            _transform_part(p, i) for i, p in enumerate(question_data.get("parts", []), 1)
-        ],
-    }
-
-
-def _transform_part(p: dict, position: int) -> dict:
-    return {
-        "publishedPartPosition": p.get("position", position),
-        "publishedPartContent": p.get("content"),
-        "publishedPartAnswerContent": p.get("answerContent"),
-        "publishedWorkedSolutionSections": p.get("workedSolutionSections", []),
-        "publishedStructuredTutorialSections": p.get("structuredTutorialSections", []),
-        "publishedResponseAreas": [
-            _transform_response_area(ra, j)
-            for j, ra in enumerate(p.get("responseAreas", []), 1)
-        ],
-    }
-
-
-def _transform_response_area(ra: dict, position: int) -> dict:
-    return {
-        "position": ra.get("position", position),
-        "preResponseText": ra.get("preResponseText"),
-        "responseType": ra.get("responseType"),
-        "answer": ra.get("answer"),
-    }
-
-
-def _build_submission_summary(submissions: list) -> list:
-    return [
-        {
-            "publishedPartPosition": None,
-            "publishedResponseAreaPosition": i,
-            "publishedResponseAreaPreResponseText": None,
-            "publishedResponseType": s.get("responseType"),
-            "publishedResponseConfig": None,
-            "totalSubmissions": s.get("totalSubmissions"),
-            "totalWrongSubmissions": s.get("wrongSubmissions"),
-            "latestSubmission": s.get("latestSubmission"),
-        }
-        for i, s in enumerate(submissions)
-    ]
-
-
-def _build_access_information(task_progress: dict) -> dict:
-    current_part = task_progress.get("currentPart", {})
-    return {
-        "estimatedMinimumTime": None,
-        "estimaredMaximumTime": None,
-        "timeTaken": task_progress.get("timeSpentOnQuestion"),
-        "accessStatus": task_progress.get("accessStatus"),
-        "markedDone": task_progress.get("markedDone"),
-        "currentPart": {
-            "position": current_part.get("position"),
-            "timeTakenPart": current_part.get("timeSpentOnPart"),
-            "markedDonePart": current_part.get("markedDone"),
-        },
-    }
