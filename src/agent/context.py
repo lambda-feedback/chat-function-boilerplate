@@ -8,7 +8,7 @@ def parse_json_to_prompt(context: dict, task_progress: dict) -> str:
 
     question = context.get("question")
     if not question:
-        return "# ERROR: Question details unavailable\n\nPlease describe the question you're working on so I can assist you effectively."
+        return "# ERROR: Question details unavailable\n\nNo question context is available for this session. Ask the student to describe the question they are working on."
 
     set_data = context.get("set", {})
     current_part = task_progress.get("currentPart", {}) if task_progress else {}
@@ -70,9 +70,9 @@ def parse_json_to_prompt(context: dict, task_progress: dict) -> str:
     # Combine
     intro = (
         "\n# Personalized Learning Assistant\n\n"
-        "I have detailed information about your current question, including your progress, responses, "
-        "and any feedback you've received. This context helps me provide targeted assistance based on "
-        "your specific situation.\n\n"
+        "The following is detailed information about the student's current question they are working on, including their progress, "
+        "responses, and any feedback they have received. Use this context to provide targeted assistance based "
+        "on their specific situation.\n\n"
     )
     valid_sections = [s.strip() for s in sections if s and s.strip()]
     response_format = (
@@ -139,10 +139,10 @@ def _get_student_work(ra_position: int, submissions: list) -> Dict[str, Any]:
 def _format_response_area(position: int, task_description: Optional[str], expected_answer: Any, student_work: Dict[str, Any]) -> str:
     task_text = f"- Task: {task_description}" if task_description else "- Task: Not specified"
     if not student_work.get("has_submissions"):
-        submission_text = "- Your Work on this response area: No response submitted yet"
+        submission_text = "- Student's work on this response area: No response submitted yet"
     else:
         submission_text = (
-            f"- Your Work on this response area:\n"
+            f"- Student's work on this response area:\n"
             f"  - Latest response: {student_work.get('latest_response', 'None')}\n"
             f"  - Latest feedback: {student_work.get('latest_feedback', 'None')}\n"
             f"  - Total attempts: {student_work.get('total_submissions', 0)} out of which {student_work.get('total_wrong', 0)} were incorrect"
