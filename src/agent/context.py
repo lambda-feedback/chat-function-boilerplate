@@ -1,7 +1,5 @@
 from typing import Optional, Dict, Any
 
-from src.agent.prompts import response_format_prompt
-
 
 def parse_json_to_prompt(context: dict, task_progress: dict) -> str:
     """Convert muEd context and task progress directly into an LLM-friendly prompt string."""
@@ -68,19 +66,8 @@ def parse_json_to_prompt(context: dict, task_progress: dict) -> str:
         sections.append(_format_part(part, part_position, is_current, time_on_part, submissions))
 
     # Combine
-    intro = (
-        "\n# Personalized Learning Assistant\n\n"
-        "The following is detailed information about the student's current question they are working on, including their progress, "
-        "responses, and any feedback they have received. Use this context to provide targeted assistance based "
-        "on their specific situation.\n\n"
-    )
     valid_sections = [s.strip() for s in sections if s and s.strip()]
-    response_format = (
-        "# Response Formatting\n" + response_format_prompt
-        if response_format_prompt
-        else ""
-    )
-    content = intro + "\n".join(valid_sections) + "\n" + response_format
+    content = "\n".join(valid_sections)
     content = content.replace("&#x20;&#x20;", " ").replace("&#x20", " ")
     return "\n".join(line for line in content.split("\n") if line.strip() or not line).strip()
 
