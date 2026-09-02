@@ -93,13 +93,13 @@ def _format_part(part: dict, part_position: int, is_current: bool, time_on_part:
     ra_block = f"\n### Response Areas\n\n{''.join(response_areas)}" if response_areas else ""
 
     answer = part.get("answerContent")
-    answer_block = f"### Final Answer\n\n{answer}" if answer else "### Final Answer\n\nNo direct answer specified for this part"
+    answer_block = f"### Final Answer (confidential)\n\n{answer}" if answer else "### Final Answer (confidential)\n\nNo direct answer specified for this part"
 
     solutions = [
         f"{ws.get('title', f'#### Solution {i+1}')}\n\n{ws.get('content', '').strip() or 'No content available'}"
         for i, ws in enumerate(part.get("workedSolutionSections", []))
     ]
-    solutions_block = "### Worked Solutions\n\n" + "\n".join(solutions) if solutions else "### Worked Solutions\n\nNone available"
+    solutions_block = "### Worked Solutions (confidential)\n\n" + "\n".join(solutions) if solutions else "### Worked Solutions (confidential)\n\nNone available"
 
     tutorials = [
         f"{ts.get('title', f'#### Tutorial {i+1}')}\n\n{ts.get('content', '').strip() or 'No content available'}"

@@ -69,7 +69,7 @@ class BaseAgent:
             blocks.append(
                 "## Known conversational style and preferences of the student for this conversation\n\n"
                 f"<conversational_style>\n{conversationalStyle}\n</conversational_style>\n\n"
-                "Your answer must be in line with this conversational style."
+                "Take this conversational style into account, within the limits set out above."
             )
 
         # Formatting rules are unconditional and go last, so they apply even with no question context.
