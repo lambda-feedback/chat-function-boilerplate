@@ -79,7 +79,7 @@ Messages are trimmed after summarization to keep context window manageable. The 
 
 ### muEd API Format
 
-`src/module.py` handles the muEd request format (https://mued.org/). The `context` field in `ChatRequest` contains nested educational data (question parts, student submissions, task info) that gets parsed into a tutoring prompt via `src/agent/context.py`.
+`src/module.py` handles the muEd request format (https://mued.org/). The `context` field in `ChatRequest` contains the question data (question parts, worked solutions, expected answers) and the `user` field contains user-specific information (e.g., user type, preferences, task progress with the student's submissions) that gets parsed into a tutoring prompt via `src/agent/context.py`.
 
 ### LLM Configuration
 

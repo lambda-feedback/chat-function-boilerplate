@@ -1,11 +1,16 @@
 {
   "conversationId": "example-conversation-id-1",
   "messages": [
-    { "role": "USER", "content": "How can I start solving this question?" }
+    {
+      "role": "USER",
+      "content": "How can I start solving this question?"
+    }
   ],
   "user": {
     "type": "LEARNER",
-    "preference": { "conversationalStyle": "" },
+    "preference": {
+      "conversationalStyle": ""
+    },
     "taskProgress": {
       "timeSpentOnQuestion": "58 minutes",
       "accessStatus": "too much time spent on this question today.",
@@ -13,30 +18,96 @@
       "currentPart": {
         "position": 1,
         "timeSpentOnPart": "37 minutes",
-        "markedDone": "This part is not marked done.",
-        "responseAreas": [
-          {
-            "responseType": "NUMBER",
-            "totalSubmissions": 1,
-            "wrongSubmissions": 1,
-            "latestSubmission": {
-              "submission": 1,
-              "feedback": "Incorrect",
-              "answer": "26"
+        "markedDone": "This part is not marked done."
+      },
+      "parts": [
+        {
+          "position": 1,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "NUMBER",
+              "submissions": [
+                {
+                  "submission": 1,
+                  "feedback": "Incorrect",
+                  "answer": "26",
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T10:14:31.000Z"
+                }
+              ]
+            },
+            {
+              "position": 2,
+              "responseType": "NUMBER",
+              "submissions": [
+                {
+                  "submission": 20,
+                  "feedback": "Incorrect",
+                  "answer": "53",
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T10:21:08.000Z"
+                }
+              ]
             }
-          },
-          {
-            "responseType": "NUMBER",
-            "totalSubmissions": 1,
-            "wrongSubmissions": 1,
-            "latestSubmission": {
-              "submission": 20,
-              "feedback": "Incorrect",
-              "answer": "53"
+          ]
+        },
+        {
+          "position": 2,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "NUMBER",
+              "submissions": [
+                {
+                  "submission": 12,
+                  "feedback": "Correct",
+                  "answer": "12",
+                  "grade": 1,
+                  "submittedAt": "2025-04-02T10:36:02.000Z"
+                },
+                {
+                  "submission": 4,
+                  "feedback": "Incorrect",
+                  "answer": "12",
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T10:33:45.000Z"
+                }
+              ]
+            },
+            {
+              "position": 2,
+              "responseType": "NUMBER",
+              "submissions": []
             }
-          }
-        ]
-      }
+          ]
+        },
+        {
+          "position": 3,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "MULTIPLE_CHOICE",
+              "submissions": [
+                {
+                  "submission": ["$1011_2$"],
+                  "feedback": "Incorrect",
+                  "answer": "(Multiple Choice); [selected] $1010_2$, $1100_2$; [unselected] $1011_2$",
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T10:47:55.000Z"
+                },
+                {
+                  "submission": ["$1010_2$", "$1011_2$"],
+                  "feedback": "One of the numbers you selected is odd.",
+                  "answer": "(Multiple Choice); [selected] $1010_2$, $1100_2$; [unselected] $1011_2$",
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T10:44:12.000Z"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "context": {
@@ -114,6 +185,33 @@
               "responseType": "NUMBER",
               "answer": 10000,
               "preResponseText": "$16_{10} = $"
+            }
+          ]
+        },
+        {
+          "position": 3,
+          "content": "Which of the following binary numbers are even?",
+          "answerContent": "$1010_2$ and $1100_2$ both end in 0, so they are even.",
+          "workedSolutionSections": [
+            {
+              "position": 1,
+              "title": "By the last digit",
+              "content": "A binary number is even exactly when its last digit is 0, so $1010_2$ and $1100_2$ are even and $1011_2$ is odd."
+            }
+          ],
+          "structuredTutorialSections": [
+            {
+              "position": 1,
+              "title": "Hint",
+              "content": "Convert one of the numbers to decimal. Which binary digit decided whether the result was odd or even?"
+            }
+          ],
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "MULTIPLE_CHOICE",
+              "answer": "(Multiple Choice); [selected] $1010_2$, $1100_2$; [unselected] $1011_2$",
+              "preResponseText": "Select all that apply."
             }
           ]
         }

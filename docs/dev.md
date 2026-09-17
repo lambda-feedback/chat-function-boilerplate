@@ -109,20 +109,35 @@ Body with optional fields:
       "currentPart": {
         "position": 1,
         "timeSpentOnPart": "10 minutes",
-        "markedDone": "This part is not marked done.",
-        "responseAreas": [
-          {
-            "responseType": "EXPRESSION",
-            "totalSubmissions": 3,
-            "wrongSubmissions": 2,
-            "latestSubmission": {
-              "submission": "<student's last answer>",
-              "feedback": "<feedback text from evaluator>",
-              "answer": "<reference answer used for evaluation>"
+        "markedDone": "This part is not marked done."
+      },
+      "parts": [
+        {
+          "position": 1,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "EXPRESSION",
+              "submissions": [
+                {
+                  "submission": "<student's first answer>",
+                  "feedback": "<feedback text from evaluator>",
+                  "answer": "<reference answer used for evaluation>",
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T09:58:12.000Z"
+                },
+                {
+                  "submission": "<student's latest answer>",
+                  "feedback": "<feedback text from evaluator>",
+                  "answer": "<reference answer used for evaluation>",
+                  "grade": 1,
+                  "submittedAt": "2025-04-02T10:04:37.000Z"
+                }
+              ]
             }
-          }
-        ]
-      }
+          ]
+        }
+      ]
     }
   },
   "context": {

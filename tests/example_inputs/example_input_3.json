@@ -1,17 +1,26 @@
 {
   "conversationId": "example-conversation-id-3",
   "messages": [
-    { "role": "USER", "content": "hi, I need help with this question" },
+    {
+      "role": "USER",
+      "content": "hi, I need help with this question"
+    },
     {
       "role": "ASSISTANT",
       "content": "Of course! I can see you're working on vector arithmetic. What would you like help with?"
     },
-    { "role": "USER", "content": "I'm confused about how to add vectors" },
+    {
+      "role": "USER",
+      "content": "I'm confused about how to add vectors"
+    },
     {
       "role": "ASSISTANT",
-      "content": "Vector addition is straightforward — you add the corresponding components. For vectors a and b, you add the first elements together, then the second, then the third."
+      "content": "Vector addition is straightforward \u2014 you add the corresponding components. For vectors a and b, you add the first elements together, then the second, then the third."
     },
-    { "role": "USER", "content": "ok so for a+b I get [-1, 5, -1]?" },
+    {
+      "role": "USER",
+      "content": "ok so for a+b I get [-1, 5, -1]?"
+    },
     {
       "role": "ASSISTANT",
       "content": "Exactly right! a+b = [-1, 5, -1]. Well done."
@@ -22,7 +31,7 @@
     },
     {
       "role": "ASSISTANT",
-      "content": "Correct — vector addition is commutative, so b+a = a+b = [-1, 5, -1]."
+      "content": "Correct \u2014 vector addition is commutative, so b+a = a+b = [-1, 5, -1]."
     },
     {
       "role": "USER",
@@ -30,7 +39,7 @@
     },
     {
       "role": "ASSISTANT",
-      "content": "That's just a sign error on the last component — easy to do. The last element of a is 3 and of b is -4, so their sum is -1, not 1."
+      "content": "That's just a sign error on the last component \u2014 easy to do. The last element of a is 3 and of b is -4, so their sum is -1, not 1."
     },
     {
       "role": "USER",
@@ -38,9 +47,12 @@
     },
     {
       "role": "ASSISTANT",
-      "content": "Scalar multiplication — you multiply every component of c by 3. So 3c = [3×0, 3×4, 3×(-1)] = [0, 12, -3]."
+      "content": "Scalar multiplication \u2014 you multiply every component of c by 3. So 3c = [3\u00d70, 3\u00d74, 3\u00d7(-1)] = [0, 12, -3]."
     },
-    { "role": "USER", "content": "I am still confused" }
+    {
+      "role": "USER",
+      "content": "I am still confused"
+    }
   ],
   "user": {
     "type": "LEARNER",
@@ -54,30 +66,96 @@
       "currentPart": {
         "position": 1,
         "timeSpentOnPart": "10 minutes",
-        "markedDone": "This part is not marked done.",
-        "responseAreas": [
-          {
-            "responseType": "MATRIX",
-            "totalSubmissions": 1,
-            "wrongSubmissions": 0,
-            "latestSubmission": {
-              "submission": [["-1"], ["5"], ["-1"]],
-              "feedback": "Correct",
-              "answer": [["-1"], ["5"], ["-1"]]
+        "markedDone": "This part is not marked done."
+      },
+      "parts": [
+        {
+          "position": 1,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "MATRIX",
+              "submissions": [
+                {
+                  "submission": [["-1"], ["5"], ["-1"]],
+                  "feedback": "Correct",
+                  "answer": [["-1"], ["5"], ["-1"]],
+                  "grade": 1,
+                  "submittedAt": "2025-04-02T11:02:19.000Z"
+                }
+              ]
+            },
+            {
+              "position": 2,
+              "responseType": "MATRIX",
+              "submissions": [
+                {
+                  "submission": [["-1"], ["5"], ["1"]],
+                  "feedback": "Missing negative sign in the last element.",
+                  "answer": [["-1"], ["5"], ["-1"]],
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T11:08:55.000Z"
+                }
+              ]
             }
-          },
-          {
-            "responseType": "MATRIX",
-            "totalSubmissions": 1,
-            "wrongSubmissions": 1,
-            "latestSubmission": {
-              "submission": [["-1"], ["5"], ["1"]],
-              "feedback": "Missing negative sign in the last element.",
-              "answer": [["-1"], ["5"], ["-1"]]
+          ]
+        },
+        {
+          "position": 2,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "MATRIX",
+              "submissions": []
+            },
+            {
+              "position": 2,
+              "responseType": "MATRIX",
+              "submissions": []
+            },
+            {
+              "position": 3,
+              "responseType": "MATRIX",
+              "submissions": []
             }
-          }
-        ]
-      }
+          ]
+        },
+        {
+          "position": 3,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "MATRIX",
+              "submissions": []
+            },
+            {
+              "position": 2,
+              "responseType": "MATRIX",
+              "submissions": []
+            }
+          ]
+        },
+        {
+          "position": 4,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "MATRIX",
+              "submissions": []
+            }
+          ]
+        },
+        {
+          "position": 5,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "MATRIX",
+              "submissions": []
+            }
+          ]
+        }
+      ]
     }
   },
   "context": {

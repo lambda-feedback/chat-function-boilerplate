@@ -1,6 +1,11 @@
 {
   "conversationId": "example-conversation-id-2",
-  "messages": [{ "role": "USER", "content": "help" }],
+  "messages": [
+    {
+      "role": "USER",
+      "content": "help"
+    }
+  ],
   "user": {
     "type": "LEARNER",
     "preference": {
@@ -13,25 +18,61 @@
       "currentPart": {
         "position": 1,
         "timeSpentOnPart": "less than one minute",
-        "markedDone": "This part is marked done.",
-        "responseAreas": [
-          {
-            "responseType": "NUMERIC_UNITS",
-            "totalSubmissions": 3,
-            "wrongSubmissions": 2,
-            "latestSubmission": {
-              "submission": "939.7 J",
-              "feedback": "Correct",
-              "answer": "\"939.7 J\""
+        "markedDone": "This part is marked done."
+      },
+      "parts": [
+        {
+          "position": 1,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "NUMERIC_UNITS",
+              "submissions": [
+                {
+                  "submission": "939.7 J",
+                  "feedback": "Correct",
+                  "answer": "\"939.7 J\"",
+                  "grade": 1,
+                  "submittedAt": "2025-04-02T09:59:41.000Z"
+                },
+                {
+                  "submission": "939.7 kJ",
+                  "feedback": "Incorrect units.",
+                  "answer": "\"939.7 J\"",
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T09:59:04.000Z"
+                },
+                {
+                  "submission": "939.7",
+                  "feedback": "Your answer is missing units.",
+                  "answer": "\"939.7 J\"",
+                  "grade": 0,
+                  "submittedAt": "2025-04-02T09:58:12.000Z"
+                }
+              ]
             }
-          }
-        ]
-      }
+          ]
+        },
+        {
+          "position": 2,
+          "responseAreas": [
+            {
+              "position": 1,
+              "responseType": "MULTIPLE_CHOICE",
+              "submissions": []
+            }
+          ]
+        }
+      ]
     }
   },
   "context": {
     "summary": "noting was discussed yet",
-    "set": { "title": "Physics", "number": 8, "description": "" },
+    "set": {
+      "title": "Physics",
+      "number": 8,
+      "description": ""
+    },
     "question": {
       "title": "Work done",
       "number": 1,
